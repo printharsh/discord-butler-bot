@@ -1,0 +1,24 @@
+{
+  "name": "roller-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrHarshPatel/roller-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrHarshPatel/roller-bot/issues"
+  },
+  "homepage": "https://github.com/MrHarshPatel/roller-bot#readme",
+  "dependencies": {
+    "discord.io": "^2.5.3",
+    "winston": "^3.2.1"
+  }
+}
