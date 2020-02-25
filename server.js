@@ -1,7 +1,8 @@
-var Discord = require('discord.io');
+var Discord = require('discord.js');
 var logger = require('winston');
 var auth = require('./secrets.json');
 var settings = require('./settings.json');
+var fs = require('fs')
 
 // Configure logger settings
 logger.remove(logger.transports.Console);
@@ -12,14 +13,9 @@ logger.level = 'debug';
 
 
 // Initialize Discord Bot
-var bot = new Discord.Client({
-   token: auth.token,
-   autorun: true
-});
+var bot = new Discord.Client();
 bot.on('ready', function (evt) {
     logger.info('Connected');
-    logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
 });
 
 rollingUser = 123
@@ -28,8 +24,7 @@ rolling = false
 bot.on('voiceStateUpdate', (oldMember, newMember) => {
     let newUserChannel = newMember.voiceChannel
     let oldUserChannel = oldMember.voiceChannel
-  
-    
+
     // User has joined voice channel and we're looking to potentially roll!
     if(!rolling && oldUserChannel === undefined && newUserChannel !== undefined) {
         let random = Math.random();
@@ -43,8 +38,8 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
             newUserChannel.join().then(connection => {
                 // Yay, it worked!
                 logger.info("About to roll, connected to channel.");
-                const dispatcher = connection.playFile('./audio/roll.mp3');
-                dispatcher.on("end", end => {
+                const dispatcher = connection.playFile(require("path").join(__dirname, './roll.mp3')).on("end", end => {
+                    console.log("HERE")
                     rolling = false
                     newUserChannel.leave();
                 });
@@ -62,13 +57,15 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
                     }
                 });
 
-              }).catch(e => {
+            }).catch(e => {
                 // Oh no, it errored! Let's log it to console :)
-                logger.error(e);
-              });
+                console.log(e);
+            });
+
+            }
 
         }
-
     }
-  }
 );
+
+bot.login(auth.token);
