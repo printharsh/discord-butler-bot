@@ -67,4 +67,5 @@ function attachHandlers(client){
 
 setupLogger();
 bot = createClient();
+attachHandlers(bot);
 bot.login(auth.token);
