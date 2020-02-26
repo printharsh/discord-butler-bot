@@ -1,71 +1,68 @@
-var Discord = require('discord.js');
-var logger = require('winston');
-var auth = require('./secrets.json');
-var settings = require('./settings.json');
-var fs = require('fs')
+const { Client, Collection} = require('discord.js');
+const logger = require('winston');
+const auth = require('./secrets.json');
+const settings = require('./settings.json');
+const fs = require('fs')
+const Enmap = require("enmap");
 
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
-});
-logger.level = 'debug';
+/**
+ * Helper function to setup, logger.
+ * @return void
+ */
+function setupLogger(){
+    logger.remove(logger.transports.Console);
+    logger.add(new logger.transports.Console, {
+        colorize: true
+    });
+    logger.level = 'debug';
+}
 
 
-// Initialize Discord Bot
-var bot = new Discord.Client();
-bot.on('ready', function (evt) {
-    logger.info('Connected');
-});
+/**
+ * Creates a Client object with commands and listeners attached.
+ * @return {Client} A client object with parameters attached.
+ */
+function createClient(){
+    var client = new Client();
+    client.commands = new Enmap();
+    client.events = new Collection();
+    client.vars = {}
+    client.settings = require('./settings.json')
+    return client
+}
 
-rollingUser = 123
-rolling = false
 
-bot.on('voiceStateUpdate', (oldMember, newMember) => {
-    let newUserChannel = newMember.voiceChannel
-    let oldUserChannel = oldMember.voiceChannel
+/**
+ * Attaches event and commands handlers to client.
+ * @param {Client} client The discord client to attach handlers to.
+ * 
+ * @return void
+ */
+function attachHandlers(client){
 
-    // User has joined voice channel and we're looking to potentially roll!
-    if(!rolling && oldUserChannel === undefined && newUserChannel !== undefined) {
-        let random = Math.random();
-        if (random <= settings.chance){
-            // Time to Roll!
-            rolling = true
+    // Attach all events to client
+    fs.readdir("./events/", (err, files) => {
+        if (err) return console.error(err);
+        files.forEach(file => {
+          const event = require(`./events/${file}`);
+          let eventName = file.split(".")[0];
+          client.on(eventName, event.bind(null, client));
+          client.events.append(eventName)
+        });
+    });
 
-            // Will disconnect if user disconnects from channel
-            rollingUser = newMember.id
-
-            newUserChannel.join().then(connection => {
-                // Yay, it worked!
-                logger.info("About to roll, connected to channel.");
-                const dispatcher = connection.playFile(require("path").join(__dirname, './roll.mp3')).on("end", end => {
-                    console.log("HERE")
-                    rolling = false
-                    newUserChannel.leave();
-                });
-                
-                // Nest the listener for checking if user leaves
-                bot.on('voiceStateUpdate', (oldMemberLeaver, newMemberLeaver) => {
-                    let newUserChannelLeave = newMemberLeaver.voiceChannel
-                    if(newUserChannelLeave === undefined){
-                        // User leaves a voice channel
-                        if(newMember.id == rollingUser){
-                            // Means we're rolling so disconnect and set rolling to false
-                            rolling = false
-                            newUserChannel.leave();
-                        }
-                    }
-                });
-
-            }).catch(e => {
-                // Oh no, it errored! Let's log it to console :)
-                console.log(e);
-            });
-
-            }
-
-        }
-    }
-);
-
-bot.login(auth.token);
+    // Attach all commands to client
+    fs.readdir("./commands/", (err, files) => {
+        if (err) return console.error(err);
+        files.forEach(file => {
+          if (!file.endsWith(".js")) return;
+          // Load the command file itself
+          let props = require(`./commands/${file}`);
+          // Get just the command name from the file name
+          let commandName = file.split(".")[0];
+          console.log(`Attempting to load command ${commandName}`);
+          // Here we simply store the whole thing in the command Enmap. We're not running it right now.
+          client.commands.set(commandName, props);
+        });
+    });
+}

@@ -1,3 +1,6 @@
 {
-    "chance": 1.00
+    "cmdPrefix": "!",
+    "chances": {
+        "roll": 1.00
+    }
 }
