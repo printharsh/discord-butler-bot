@@ -1,20 +1,8 @@
 const { Client, Collection} = require('discord.js');
-const logger = require('winston');
+const logger = require('./logger.js');
 const auth = require('./secrets.json');
 const fs = require('fs')
 const Enmap = require("enmap");
-
-/**
- * Helper function to setup, logger.
- * @return void
- */
-function setupLogger(){
-    logger.remove(logger.transports.Console);
-    logger.add(new logger.transports.Console, {
-        colorize: true
-    });
-    logger.level = 'debug';
-}
 
 
 /**
@@ -65,7 +53,6 @@ function attachHandlers(client){
     });
 }
 
-setupLogger();
 bot = createClient();
 attachHandlers(bot);
 bot.login(auth.token);
