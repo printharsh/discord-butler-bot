@@ -45,7 +45,7 @@ function attachHandlers(client){
           const event = require(`./events/${file}`);
           let eventName = file.split(".")[0];
           client.on(eventName, event.bind(null, client));
-          client.events.append(eventName)
+          client.events.push(eventName)
         });
     });
 
