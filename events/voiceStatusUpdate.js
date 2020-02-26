@@ -26,6 +26,7 @@ function roll(random, client, joinedChannel, leftChannel, newMember){
 
 module.exports = (client, oldMember, newMember) => {
     // A user has muted, deafened, joined or left a channel.
+    print("HERE!")
 
     // Get channels joined and left.
     let joinedChannel = newMember.voiceChannel
