@@ -24,7 +24,7 @@ function setupLogger(){
 function createClient(){
     var client = new Client();
     client.commands = new Enmap();
-    client.events = new Collection();
+    client.events = [];
     client.vars = {}
     client.settings = require('./settings.json')
     return client
