@@ -1,6 +1,5 @@
 function roll(random, client, joinedChannel, leftChannel, newMember){
     let chance = client.settings.chances.roll
-    print(chance);
     let random = Math.random();
     if (random <= chance){
         joinedChannel.join().then(connection => {
@@ -26,7 +25,6 @@ function roll(random, client, joinedChannel, leftChannel, newMember){
 
 module.exports = (client, oldMember, newMember) => {
     // A user has muted, deafened, joined or left a channel.
-    print("HERE!")
 
     // Get channels joined and left.
     let joinedChannel = newMember.voiceChannel
@@ -35,7 +33,6 @@ module.exports = (client, oldMember, newMember) => {
     // User has joined a voice channel and the bot is not already in a voice channel.
     if(leftChannel === undefined && joinedChannel !== undefined && newMember.guild.voiceConnection !== null){
         let random = Math.random();
-        print('here')
         roll(random, client, joinedChannel, leftChannel, newMember);
     }
     else if(leftChannel === undefined && joinedChannel !== undefined && newMember.guild.voiceConnection === null && client.vars['follwowing'] !== null && client.vars['following'] === newMember.id && joinedChannel !== client.vars['currentChannel']){
