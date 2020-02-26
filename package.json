@@ -18,12 +18,9 @@
   },
   "homepage": "https://github.com/MrHarshPatel/roller-bot#readme",
   "dependencies": {
-    "discord.io": "^2.5.3",
     "discord.js": "^11.5.1",
     "ffmpeg": "0.0.4",
-    "ffmpeg-binaries": "^4.0.0",
     "node-opus": "^0.2.7",
-    "opusscript": "0.0.6",
     "winston": "^3.2.1",
     "ytdl-core": "^2.0.0"
   }

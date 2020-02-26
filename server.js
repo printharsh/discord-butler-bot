@@ -1,7 +1,6 @@
 const { Client, Collection} = require('discord.js');
 const logger = require('winston');
 const auth = require('./secrets.json');
-const settings = require('./settings.json');
 const fs = require('fs')
 const Enmap = require("enmap");
 
@@ -39,7 +38,6 @@ function createClient(){
  * @return void
  */
 function attachHandlers(client){
-
     // Attach all events to client
     fs.readdir("./events/", (err, files) => {
         if (err) return console.error(err);
@@ -66,3 +64,7 @@ function attachHandlers(client){
         });
     });
 }
+
+setupLogger();
+bot = createClient();
+bot.login(auth.token);
