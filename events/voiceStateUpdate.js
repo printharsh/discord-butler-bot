@@ -25,6 +25,62 @@ function roll(random, client, joinedChannel, leftChannel, newMember){
     }
 }
 
+function death(random, client, newMember){
+    let chance = client.settings.chances.death
+    if(random <= chance){
+        //Remove all roles
+        let all_roles = newMember.roles;
+        newMember.removeRoles(all_roles);
+    
+        let deathRole = client.settings.deathRole;
+        let roleName = deathRole.name;
+
+        let role = newMember.guild.roles.find(x => x.name == roleName);
+        if(role){
+            newMember.addRole(role)
+        }
+        else{
+            // Create role for this guild and add the member to it.
+            newMember.guild.createRole(deathRole).then(newRole => {
+                role = newRole
+                newMember.addRole(newRole); 
+                console.log(`Created new role with name ${role.name} and color ${role.color}`)
+            })
+            .catch(console.error)
+        }
+
+        let deathChannelName = client.settings.deathChannel.name;
+        let graveyardChannelName = client.settings.graveyardChannel.name;
+        let deathChannel = null;
+        let graveyardChannel = null;
+        // Create death channel if not exist
+        if(!newMember.guild.channels.exists(deathChannelName)){
+            newMember.guild.createChannel(deathChannelName, 'text');
+        }
+        deathChannel = newMember.guild.channels.find(channel => channel.name === deathChannelName)
+
+        // Create graveyard channel if not exist
+        if(!newMember.guild.channels.exists(graveyardChannelName)){
+            newMember.guild.createChannel(graveyardChannelName, 'text');
+        }
+        graveyardChannel = newMember.guild.channels.find(channel => channel.name === graveyardChannelName)
+        
+        const everyoneRole = newMember.guild.roles.find('name', '@everyone');
+        graveyardChannel.overwritePermissions(everyoneRole, { VIEW_CHANNEL: false });
+        graveyardChannel.overwritePermissions(role, { VIEW_CHANNEL: true });
+
+        // Now get random death message
+        let randomIndex = Math.floor(Math.random() * client.settings.deathStrings.length); 
+        let randomDeathString = client.settings.deathStrings[randomIndex];
+
+        // Send death string after replacing [name] and [random_name]
+        let random_user = newMember.guild.members.random();
+        randomDeathString.replace('[name]', '<@' + newMember.id + '>');
+        randomDeathString.replace('[random_name]', '<@' + random_user.id + '>');
+        deathChannel.send(randomDeathString)
+    }
+}
+
 module.exports = (client, oldMember, newMember) => {
     // A user has muted, deafened, joined or left a channel.
 
@@ -36,6 +92,7 @@ module.exports = (client, oldMember, newMember) => {
     if(leftChannel === undefined && joinedChannel !== undefined && newMember.guild.voiceConnection === null){
         let random = Math.random();
         roll(random, client, joinedChannel, leftChannel, newMember);
+        death(random, client, newMember);
     }
     else if(leftChannel !== undefined && joinedChannel !== undefined && newMember.guild.voiceConnection !== null && client.vars['follwowing'] !== null && client.vars['following'] === newMember.id && joinedChannel !== client.vars['currentChannel']){
         // Follow the user!
