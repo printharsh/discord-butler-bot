@@ -63,7 +63,7 @@ function death(random, client, newMember){
         if(!newMember.guild.channels.exists('name',graveyardChannelName)){
             newMember.guild.createChannel(graveyardChannelName, 'text');
         }
-        graveyardChannel = newMember.guild.channels.find(channel => channel.name === graveyardChannelName)
+        graveyardChannel = await newMember.guild.channels.find(channel => channel.name === graveyardChannelName)
         
         const everyoneRole = newMember.guild.roles.find('name', '@everyone');
         graveyardChannel.overwritePermissions(everyoneRole, { VIEW_CHANNEL: false });
