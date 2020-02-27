@@ -31,10 +31,8 @@ module.exports = (client, oldMember, newMember) => {
     let joinedChannel = newMember.voiceChannel
     let leftChannel = oldMember.voiceChannel
 
-    console.log(joinedChannel)
-    console.log(leftChannel)
     // User has joined a voice channel and the bot is not already in a voice channel.
-    if(leftChannel === undefined && joinedChannel !== undefined && newMember.guild.voiceConnection !== null){
+    if(leftChannel === undefined && joinedChannel !== undefined && newMember.guild.voiceConnection === null){
         let random = Math.random();
         roll(random, client, joinedChannel, leftChannel, newMember);
     }
