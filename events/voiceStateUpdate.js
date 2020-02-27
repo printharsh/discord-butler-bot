@@ -50,6 +50,7 @@ function death(random, client, newMember){
         }
 
         let deathChannelName = client.settings.deathChannel.name;
+        console.log(deathChannelName)
         let graveyardChannelName = client.settings.graveyardChannel.name;
         let deathChannel = null;
         let graveyardChannel = null;
