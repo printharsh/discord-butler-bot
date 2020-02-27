@@ -28,6 +28,7 @@ function roll(random, client, joinedChannel, leftChannel, newMember){
 function death(random, client, newMember){
     let chance = client.settings.chances.death
     if(random <= chance){
+        console.log("HERE")
         //Remove all roles
         let all_roles = newMember.roles;
         newMember.removeRoles(all_roles);
