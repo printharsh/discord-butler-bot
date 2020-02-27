@@ -1,6 +1,6 @@
 {
     "cmdPrefix": "!",
     "chances": {
-        "roll": 1.00
+        "roll": 0.01
     }
 }
