@@ -37,7 +37,7 @@ module.exports = (client, oldMember, newMember) => {
         let random = Math.random();
         roll(random, client, joinedChannel, leftChannel, newMember);
     }
-    else if(leftChannel === undefined && joinedChannel !== undefined && newMember.guild.voiceConnection !== null && client.vars['follwowing'] !== null && client.vars['following'] === newMember.id && joinedChannel !== client.vars['currentChannel']){
+    else if(leftChannel !== undefined && joinedChannel !== undefined && newMember.guild.voiceConnection !== null && client.vars['follwowing'] !== null && client.vars['following'] === newMember.id && joinedChannel !== client.vars['currentChannel']){
         // Follow the user!
         joinedChannel.join();
         client.vars['currentChannel'] = joinedChannel;
