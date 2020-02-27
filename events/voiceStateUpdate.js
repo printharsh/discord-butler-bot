@@ -1,3 +1,5 @@
+const logger = require('./logger.js');
+
 function roll(random, client, joinedChannel, leftChannel, newMember){
     let chance = client.settings.chances.roll
 
