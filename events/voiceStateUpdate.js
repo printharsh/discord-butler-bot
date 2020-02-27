@@ -1,6 +1,8 @@
 function roll(random, client, joinedChannel, leftChannel, newMember){
     let chance = client.settings.chances.roll
     let random = Math.random();
+
+    console.log(chance)
     if (random <= chance){
         joinedChannel.join().then(connection => {
             // Yay, it worked!
