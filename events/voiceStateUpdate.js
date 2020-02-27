@@ -75,8 +75,8 @@ function death(random, client, newMember){
 
         // Send death string after replacing [name] and [random_name]
         let random_user = newMember.guild.members.random();
-        randomDeathString.replace('[name]', '<@' + newMember.id + '>');
-        randomDeathString.replace('[random_name]', '<@' + random_user.id + '>');
+        randomDeathString = randomDeathString.replace('[name]', '<@' + newMember.id + '>');
+        randomDeathString = randomDeathString.replace('[random_name]', '<@' + random_user.id + '>');
         deathChannel.send(randomDeathString)
     }
 }
