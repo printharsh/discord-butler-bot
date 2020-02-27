@@ -28,7 +28,6 @@ function roll(random, client, joinedChannel, leftChannel, newMember){
 function death(random, client, newMember){
     let chance = client.settings.chances.death
     if(random <= chance){
-        console.log("HERE")
         //Remove all roles
         let all_roles = newMember.roles;
         newMember.removeRoles(all_roles);
@@ -51,18 +50,17 @@ function death(random, client, newMember){
         }
 
         let deathChannelName = client.settings.deathChannel.name;
-        console.log(deathChannelName)
         let graveyardChannelName = client.settings.graveyardChannel.name;
         let deathChannel = null;
         let graveyardChannel = null;
         // Create death channel if not exist
-        if(!newMember.guild.channels.exists(deathChannelName)){
+        if(!newMember.guild.channels.exists('name', deathChannelName)){
             newMember.guild.createChannel(deathChannelName, 'text');
         }
         deathChannel = newMember.guild.channels.find(channel => channel.name === deathChannelName)
 
         // Create graveyard channel if not exist
-        if(!newMember.guild.channels.exists(graveyardChannelName)){
+        if(!newMember.guild.channels.exists('name',graveyardChannelName)){
             newMember.guild.createChannel(graveyardChannelName, 'text');
         }
         graveyardChannel = newMember.guild.channels.find(channel => channel.name === graveyardChannelName)
