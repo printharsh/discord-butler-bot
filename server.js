@@ -1,6 +1,5 @@
 const { Client, Collection} = require('discord.js');
 const logger = require('./logger.js');
-const auth = require('./secrets.json');
 const fs = require('fs')
 const Enmap = require("enmap");
 
@@ -56,4 +55,4 @@ function attachHandlers(client){
 
 bot = createClient();
 attachHandlers(bot);
-bot.login(auth.token);
+bot.login(process.env.BOT_TOKEN);
