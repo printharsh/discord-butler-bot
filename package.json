@@ -23,5 +23,8 @@
     "node-opus": "^0.2.7",
     "winston": "^3.2.1",
     "ytdl-core": "^2.0.0"
+  },
+  "engines":{
+    "node": "10.17.0"
   }
 }
