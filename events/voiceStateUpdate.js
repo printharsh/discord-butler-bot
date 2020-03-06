@@ -3,9 +3,7 @@ const logger = require('../logger.js');
 function roll(random, client, joinedChannel, leftChannel, newMember){
     let chance = client.settings.chances.roll
 
-    console.log(chance)
-    console.log(random)
-    if (chance[0] <= random && random <= chance[1]){
+    if (chance[0] < random && random <= chance[1]){
         joinedChannel.join().then(connection => {
             // Yay, it worked!
             logger.info("About to roll, connected to channel.");
@@ -29,9 +27,8 @@ function roll(random, client, joinedChannel, leftChannel, newMember){
 
 function death(random, client, newMember){
     let chance = client.settings.chances.death
-    console.log(chance)
-    console.log(random)
-    if(chance[0] <=random && random <= chance[1]){
+
+    if(chance[0] < random && random <= chance[1]){
         //Remove all roles
         let all_roles = newMember.roles;
         newMember.removeRoles(all_roles);
