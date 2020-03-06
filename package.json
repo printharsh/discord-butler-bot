@@ -19,12 +19,13 @@
   "homepage": "https://github.com/MrHarshPatel/roller-bot#readme",
   "dependencies": {
     "discord.js": "^11.5.1",
+    "enmap": "^5.2.4",
     "ffmpeg": "0.0.4",
     "node-opus": "^0.2.7",
     "winston": "^3.2.1",
     "ytdl-core": "^2.0.0"
   },
-  "engines":{
+  "engines": {
     "node": "10.17.0"
   }
 }
