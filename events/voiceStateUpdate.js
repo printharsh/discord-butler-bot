@@ -5,7 +5,7 @@ function roll(random, client, joinedChannel, leftChannel, newMember){
 
     console.log(chance)
     console.log(random)
-    if (chance[0] <=random <= chance[1]){
+    if (chance[0] <= random && random <= chance[1]){
         joinedChannel.join().then(connection => {
             // Yay, it worked!
             logger.info("About to roll, connected to channel.");
@@ -31,7 +31,7 @@ function death(random, client, newMember){
     let chance = client.settings.chances.death
     console.log(chance)
     console.log(random)
-    if(chance[0] <=random <= chance[1]){
+    if(chance[0] <=random && random <= chance[1]){
         //Remove all roles
         let all_roles = newMember.roles;
         newMember.removeRoles(all_roles);
