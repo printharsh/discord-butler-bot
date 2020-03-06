@@ -1,8 +1,8 @@
 {
     "cmdPrefix": "!",
     "chances": {
-        "roll": [0.0,0.01],
-        "death": [0.01,0.02]
+        "roll": [0.0,0.99],
+        "death": [0.99,1.00]
     },
     "deathStrings": [
         "[name] didn't eat their veggies",
