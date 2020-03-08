@@ -1,10 +1,11 @@
 module.exports = (client, message) => {
     // Ignore all bots
+    console.log("Message Recieved: " + message)
     if (message.author.bot) return;
   
     // Ignore messages not starting with the prefix (in config.json)
     if (message.content.indexOf(client.settings.prefix) !== 0) return;
-  
+    console.log("Correct prefix in message")
     // Our standard argument/command name definition.
     const args = message.content.slice(client.settings.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
@@ -14,7 +15,7 @@ module.exports = (client, message) => {
   
     // If that command doesn't exist, silently exit and do nothing
     if (!cmd) return;
-  
+    console.log("Running command now")
     // Run the command
     cmd.run(client, message, args);
 };
