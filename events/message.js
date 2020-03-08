@@ -1,15 +1,10 @@
 module.exports = (client, message) => {
     // Ignore all bots
-    console.log("Message Recieved: " + message)
     if (message.author.bot) return;
-    console.log("Message is not a bot")
-    console.log("this is the prefix: " + client.settings.prefix)
-    console.log(client)
     // Ignore messages not starting with the prefix (in config.json)
-    if (message.content.indexOf(client.settings.prefix) !== 0) return;
-    console.log("Correct prefix in message")
+    if (message.content.indexOf(client.settings.cmdPrefix) !== 0) return;
     // Our standard argument/command name definition.
-    const args = message.content.slice(client.settings.prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(client.settings.cmdPrefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
   
     // Grab the command data from the client.commands Enmap
@@ -17,7 +12,6 @@ module.exports = (client, message) => {
   
     // If that command doesn't exist, silently exit and do nothing
     if (!cmd) return;
-    console.log("Running command now")
     // Run the command
     cmd.run(client, message, args);
 };
