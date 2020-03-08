@@ -4,6 +4,7 @@ module.exports = (client, message) => {
     if (message.author.bot) return;
     console.log("Message is not a bot")
     console.log("this is the prefix: " + client.settings.prefix)
+    console.log(client)
     // Ignore messages not starting with the prefix (in config.json)
     if (message.content.indexOf(client.settings.prefix) !== 0) return;
     console.log("Correct prefix in message")
