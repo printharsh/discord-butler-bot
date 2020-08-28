@@ -22,20 +22,26 @@ function shuffle(array) {
 
 exports.run = (client, message, args) => {
     console.log('Creating new custom game...')
-    console.log('Max amount of reactions: ', args[0])
+
+    maxPlayers = args[0]
+    if(args[0] === undefined){
+        maxPlayers = 10
+    }
+
+    console.log('Max amount of reactions: ', maxPlayers)
     message.channel.send("Yoooooo @here, customs are starting! React with 👍 to join in! React with ⭐ once everyone's in!").then(gameMessage => {
         gameMessage.react('👍');
 
-        const joinReactionFilter = reaction => {
+        const joinReactionFilter = (reaction, user) => {
             return reaction.emoji.name === '👍' && user.id !== gameMessage.author.id;
         }
         
-        const startReactionFilter = reaction => {
+        const startReactionFilter = (reaction, user) => {
             // Can only be started by person who did !customs command.
             return reaction.emoji.name === '⭐' && user.id === message.author.id;
         }
 
-        let joinReactionCollector = gameMessage.createReactionCollector(joinReactionFilter, {time: 1800000, max: args[0]});
+        let joinReactionCollector = gameMessage.createReactionCollector(joinReactionFilter, {time: 1800000, max: maxPlayers});
         let startReactionCollector = gameMessage.createReactionCollector(startReactionFilter, {time: 1800000});
     
         joinReactionCollector.on('end', collected => {
