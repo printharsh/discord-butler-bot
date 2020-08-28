@@ -50,7 +50,9 @@ exports.run = (client, message, args) => {
             console.log(collected.forEach((reaction => reaction.users.forEach(console.log))));
 
             collected.forEach((reaction => reaction.users.forEach(user => {
-                users.append(user)
+                if(!user.bot){
+                    users.push(user)
+                }
             })));
 
             console.log(users)
@@ -62,7 +64,7 @@ exports.run = (client, message, args) => {
             let teamOne = users.slice(0, half);
             let teamTwo = users.slice(half, users.length);
             
-            message.channel.send(`Team One: ${teamOne.join(' ')} \n Team Two: ${teamTwo.join(' ')}`).catch(console.error);
+            message.channel.send(`Team One: ${teamOne.join(' ')} \nTeam Two: ${teamTwo.join(' ')}`).catch(console.error);
         });
 
         startReactionCollector.on('collect', (reaction, user) => {
