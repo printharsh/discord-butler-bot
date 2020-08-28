@@ -47,7 +47,14 @@ exports.run = (client, message, args) => {
         joinReactionCollector.on('end', collected => {
             console.log('in here!')
             var users = []
-            console.log(collected['👍'])
+            console.log(collected.forEach((reaction => reaction.users.forEach(console.log))));
+
+            collected.forEach((reaction => reaction.users.forEach(user => {
+                users.append(user)
+            })));
+
+            console.log(users)
+
             shuffle(users);
     
             let half = Math.floor(users.length / 2)
