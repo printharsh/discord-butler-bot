@@ -38,6 +38,7 @@ exports.run = (client, message, args) => {
         joinReactionCollector.on('end', collected => {
             console.log('in here!')
             var users = []
+            console.log(collected)
             for(collect in collected){
                 console.log(collect)
                 console.log(collect.user)
