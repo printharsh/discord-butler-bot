@@ -35,24 +35,27 @@ exports.run = (client, message, args) => {
         let joinReactionCollector = gameMessage.createReactionCollector(joinReactionFilter, {time: 1800000});
         let startReactionCollector = gameMessage.createReactionCollector(startReactionFilter, {time: 1800000});
     
+        joinReactionCollector.on('end', collected => {
+            console.log('in here!')
+            var users = []
+            for(collect in collected){
+                console.log(collect)
+                console.log(collect.user)
+                console.log(collect.user.username)
+                users.append(collect.user.username)
+            }
+            shuffle(users);
+    
+            let half = Math.floor(users.length / 2)
+            
+            let teamOne = users.slice(0, half);
+            let teamTwo = users.slice(half, users.length);
+            
+            message.channel.send(`Team One: ${teamOne.join(' ')} \n Team Two: ${teamTwo.join(' ')}`).catch(console.error);
+        });
+
         startReactionCollector.on('collect', (reaction, user) => {
             console.log('starting custom!')
-
-            joinReactionCollector.on('end', collected => {
-                console.log('in here!')
-                var users = []
-                for(collect in collected){
-                    users.append(collect.user.username)
-                }
-                shuffle(users);
-        
-                let half = Math.floor(users.length / 2)
-                
-                let teamOne = users.slice(0, half);
-                let teamTwo = users.slice(half, users.length);
-                
-                message.channel.send(`Team One: ${teamOne.join(' ')} \n Team Two: ${teamTwo.join(' ')}`).catch(console.error);
-            });
             joinReactionCollector.stop('Starting custom!')
         });
     
