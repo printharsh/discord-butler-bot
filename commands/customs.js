@@ -36,6 +36,7 @@ exports.run = (client, message, args) => {
         let startReactionCollector = gameMessage.createReactionCollector(startReactionFilter, {time: 1800000});
     
         joinReactionCollector.on('end', collected => {
+            console.log('in here!')
             var users = []
             for(reaction in collected){
                 users.append(reaction.user.username)
@@ -51,6 +52,7 @@ exports.run = (client, message, args) => {
         });
     
         startReactionCollector.on('collect', (reaction, user) => {
+            console.log('starting custom!')
             joinReactionCollector.stop('Starting custom!')
         });
     
