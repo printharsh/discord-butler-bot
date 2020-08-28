@@ -29,32 +29,31 @@ function shuffle(array) {
 
 exports.run = (client, message, args) => {
     console.log('Creating new custom game...')
-    gameMessage = await message.channel.send("Yoooooo @here, customs are starting! React with 👍 to join in! React with ⭐ once everyone's in!").catch(console.error);
+    message.channel.send("Yoooooo @here, customs are starting! React with 👍 to join in! React with ⭐ once everyone's in!").then(gameMessage => {
+        gameMessage.react('👍');
 
-    gameMessage.react('👍');
-
-    let joinReactionCollector = gameMessage.createReactionCollector(joinReactionFilter, {time: 1800000});
-    let startReactionCollector = gameMessage.createReactionCollector(startReactionFilter, {time: 1800000});
-
-    joinReactionCollector.on('end', collected => {
-        var users = []
-        for(reaction in collected){
-            users.append(reaction.user.username)
-        }
-        shuffle(users);
-
-        let half = Math.floor(users.length / 2)
-        
-        let teamOne = users.slice(0, half);
-        let teamTwo = users.slice(half, users.length);
-        
-        await message.channel.send(`Team One: ${teamOne.join(' ')} \n Team Two: ${teamTwo.join(' ')}`).catch(console.error);
-    });
-
-    startReactionCollector.on('collect', (reaction, user) => {
-        joinReactionCollector.stop('Starting custom!')
-    });
-
-
+        let joinReactionCollector = gameMessage.createReactionCollector(joinReactionFilter, {time: 1800000});
+        let startReactionCollector = gameMessage.createReactionCollector(startReactionFilter, {time: 1800000});
+    
+        joinReactionCollector.on('end', collected => {
+            var users = []
+            for(reaction in collected){
+                users.append(reaction.user.username)
+            }
+            shuffle(users);
+    
+            let half = Math.floor(users.length / 2)
+            
+            let teamOne = users.slice(0, half);
+            let teamTwo = users.slice(half, users.length);
+            
+            await message.channel.send(`Team One: ${teamOne.join(' ')} \n Team Two: ${teamTwo.join(' ')}`).catch(console.error);
+        });
+    
+        startReactionCollector.on('collect', (reaction, user) => {
+            joinReactionCollector.stop('Starting custom!')
+        });
+    
+    }).catch(console.error);
 
 }
