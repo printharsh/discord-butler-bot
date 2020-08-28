@@ -1,11 +1,11 @@
 const logger = require('../logger.js');
 
 const joinReactionFilter = reaction => {
-    return reaction.name === '👍'
+    return reaction.emoji.name === '👍'
 }
 
 const startReactionFilter = reaction => {
-    return reaction.name === '⭐'
+    return reaction.emoji.name === '⭐'
 }
 
 function shuffle(array) {
