@@ -1,12 +1,5 @@
 const logger = require('../logger.js');
 
-const joinReactionFilter = reaction => {
-    return reaction.emoji.name === '👍'
-}
-
-const startReactionFilter = reaction => {
-    return reaction.emoji.name === '⭐'
-}
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -29,22 +22,26 @@ function shuffle(array) {
 
 exports.run = (client, message, args) => {
     console.log('Creating new custom game...')
+    console.log('Max amount of reactions: ', args[0])
     message.channel.send("Yoooooo @here, customs are starting! React with 👍 to join in! React with ⭐ once everyone's in!").then(gameMessage => {
         gameMessage.react('👍');
 
-        let joinReactionCollector = gameMessage.createReactionCollector(joinReactionFilter, {time: 1800000});
+        const joinReactionFilter = reaction => {
+            return reaction.emoji.name === '👍' && user.id !== gameMessage.author.id;
+        }
+        
+        const startReactionFilter = reaction => {
+            // Can only be started by person who did !customs command.
+            return reaction.emoji.name === '⭐' && user.id === message.author.id;
+        }
+
+        let joinReactionCollector = gameMessage.createReactionCollector(joinReactionFilter, {time: 1800000, max: args[0]});
         let startReactionCollector = gameMessage.createReactionCollector(startReactionFilter, {time: 1800000});
     
         joinReactionCollector.on('end', collected => {
             console.log('in here!')
             var users = []
-            console.log(collected)
-            for(collect in collected){
-                console.log(collect)
-                console.log(collect.user)
-                console.log(collect.user.username)
-                users.append(collect.user.username)
-            }
+            console.log(collected['👍'])
             shuffle(users);
     
             let half = Math.floor(users.length / 2)
