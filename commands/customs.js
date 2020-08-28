@@ -47,7 +47,7 @@ exports.run = (client, message, args) => {
             let teamOne = users.slice(0, half);
             let teamTwo = users.slice(half, users.length);
             
-            await message.channel.send(`Team One: ${teamOne.join(' ')} \n Team Two: ${teamTwo.join(' ')}`).catch(console.error);
+            message.channel.send(`Team One: ${teamOne.join(' ')} \n Team Two: ${teamTwo.join(' ')}`).catch(console.error);
         });
     
         startReactionCollector.on('collect', (reaction, user) => {
