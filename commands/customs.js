@@ -21,7 +21,6 @@ function shuffle(array) {
 }
 
 exports.run = (client, message, args) => {
-    console.log('Creating new custom game...')
 
     maxPlayers = args[0]
     if(args[0] === undefined){
@@ -29,7 +28,7 @@ exports.run = (client, message, args) => {
     }
 
     console.log('Max amount of reactions: ', maxPlayers)
-    message.channel.send("Yoooooo @here, customs are starting! React with 👍 to join in! React with ⭐ once everyone's in!").then(gameMessage => {
+    message.channel.send("Yoooooo @Customs , customs are starting! React with 👍 to join in! React with ⭐ once everyone's in!").then(gameMessage => {
         gameMessage.react('👍');
 
         const joinReactionFilter = (reaction, user) => {
@@ -45,9 +44,7 @@ exports.run = (client, message, args) => {
         let startReactionCollector = gameMessage.createReactionCollector(startReactionFilter, {time: 1800000});
     
         joinReactionCollector.on('end', collected => {
-            console.log('in here!')
             var users = []
-            console.log(collected.forEach((reaction => reaction.users.forEach(console.log))));
 
             collected.forEach((reaction => reaction.users.forEach(user => {
                 if(!user.bot){
@@ -55,7 +52,6 @@ exports.run = (client, message, args) => {
                 }
             })));
 
-            console.log(users)
 
             shuffle(users);
     
@@ -68,7 +64,6 @@ exports.run = (client, message, args) => {
         });
 
         startReactionCollector.on('collect', (reaction, user) => {
-            console.log('starting custom!')
             joinReactionCollector.stop('Starting custom!')
         });
     
