@@ -26,9 +26,8 @@ exports.run = (client, message, args) => {
     if(args[0] === undefined){
         maxPlayers = 10
     }
-    customsRole = message.channel.server.roles.get('name', 'Customs');
     console.log('Max amount of reactions: ', maxPlayers)
-    message.channel.send("Yoooooo" + customsRole.mention() + " , customs are starting! React with 👍 to join in! React with ⭐ once everyone's in!").then(gameMessage => {
+    message.channel.send("Yoooooo @here, customs are starting! React with 👍 to join in! React with ⭐ once everyone's in!").then(gameMessage => {
         gameMessage.react('👍');
 
         const joinReactionFilter = (reaction, user) => {
