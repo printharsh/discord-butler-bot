@@ -26,7 +26,7 @@ exports.run = async (client, message, args, serverMusicQueue) => {
     }
     console.log(message.member.voice);
     console.log(message.member);
-    const voiceChannel = message.member.voice.channel;
+    const voiceChannel = message.member.voiceChannelID;
     if (!voiceChannel){
         return essage.channel.send("You need to be in a voice channel to perform this command.");
     }
