@@ -24,15 +24,15 @@ exports.run = async (client, message, args, serverMusicQueue) => {
     if(args[0] == undefined){
         return message.channel.send("Invalid usage. Proper usage: !play {some song name}")
     }
-    const { voiceChannel } = message.member.voice;
-
+    const voiceChannel = message.member.voiceChannel;
     if (!voiceChannel){
         return message.channel.send("You need to be in a voice channel to perform this command.");
     }
 
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
-      return message.channel.send("I do not have permission to connect and speak in your voice channel.");
+        console.log('You do not have permissions.')
+        return message.channel.send("I do not have permission to connect and speak in your voice channel.");
     }
 
     const songInfo = await ytdl.getInfo(args[1]);
