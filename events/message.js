@@ -14,7 +14,7 @@ module.exports = (client, message) => {
     if (!cmd) return;
     // Run the command
     if(command == 'play'){
-        return await cmd.run(client, message, args, serverMusicQueue);
+        return cmd.run(client, message, args, serverMusicQueue);
     }
     else{
         cmd.run(client, message, args);
