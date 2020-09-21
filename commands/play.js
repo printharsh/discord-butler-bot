@@ -44,22 +44,22 @@ exports.run = async (client, message, args, serverMusicQueue) => {
     };
 
     if (!serverMusicQueue) {
-        var thisServerQueue = {
-          textChannel: message.channel,
-          voiceChannel: voiceChannel,
-          connection: null,
-          songs: [],
-          volume: 5,
-          playing: true
-        };
-        client.queue.set(message.guild.id, thisServerQueue);
-        thisServerQueue.songs.push(song)
-        
         try {
+            var thisServerQueue = {
+                textChannel: message.channel,
+                voiceChannel: voiceChannel,
+                connection: null,
+                songs: [],
+                volume: 5,
+                playing: true
+            };
+            client.queue.set(message.guild.id, thisServerQueue);
+            thisServerQueue.songs.push(song)
+
             let connection = await voiceChannel.join();
             console.log(thisServerQueue)
             thisServerQueue.connection = connection;
-            play(message.guild, thisServerQueue.songs[0], serverMusicQueue)
+            play(message.guild, thisServerQueue.songs[0], thisServerQueue)
         }
         catch (err) {
             client.queue.delete(message.guild.id);
