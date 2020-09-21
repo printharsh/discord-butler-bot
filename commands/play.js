@@ -22,19 +22,18 @@ function play(guild, song, serverMusicQueue) {
 exports.run = async (client, message, args, serverMusicQueue) => {
 
     if(args[0] == undefined){
-        message.channel.send("Invalid usage. Proper usage: !play {some song name}")
-        return;
+        return message.channel.send("Invalid usage. Proper usage: !play {some song name}")
     }
+    console.log(message.member.voice);
+    console.log(message.member);
     const voiceChannel = message.member.voice.channel;
     if (!voiceChannel){
-        message.channel.send("You need to be in a voice channel to perform this command.");
-        return;
+        return essage.channel.send("You need to be in a voice channel to perform this command.");
     }
 
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
-      message.channel.send("I do not have permission to connect and speak in your voice channel.");
-      return;
+      return message.channel.send("I do not have permission to connect and speak in your voice channel.");
     }
 
     const songInfo = await ytdl.getInfo(args[1]);
@@ -62,16 +61,14 @@ exports.run = async (client, message, args, serverMusicQueue) => {
             play(message.guild, thisServerQueue.songs[0], serverMusicQueue)
         }
         catch (err) {
-            message.channel.send(`There was an error ${err}. Removing queue.`)
             client.queue.delete(message.guild.id);
-            return;
+            return message.channel.send(`There was an error ${err}. Removing queue.`)
         }
     }
     else {
         // Already a queue so just push it.
         serverMusicQueue.songs.push(song);
-        message.channel.send(`${song.title} has been added to the queue!`);
-        return;
+        return message.channel.send(`${song.title} has been added to the queue!`);
     }
 
 
