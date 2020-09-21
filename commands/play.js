@@ -8,7 +8,7 @@ function play(guild, song, serverMusicQueue) {
     }
   
     const dispatcher = serverMusicQueue.connection
-      .play(ytdl(song.url))
+      .playStream(ytdl(song.url))
       .on("finish", () => {
         serverMusicQueue.songs.shift();
         play(guild, serverMusicQueue.songs[0]);
