@@ -18,7 +18,11 @@ function play(message, song) {
         serverMusicQueue.songs.shift();
         play(message, serverMusicQueue.songs[0]);
       })
-      .on("error", error => console.error(error));
+      .on("error", error => {
+        console.error(error)
+        serverMusicQueue.songs.shift();
+        play(message, serverMusicQueue.songs[0]);
+      });
     dispatcher.setVolumeLogarithmic(serverMusicQueue.volume / 5);
     serverMusicQueue.textChannel.send(`Currently playing: **${song.title}**`);
 }
