@@ -14,6 +14,7 @@ function play(message, song) {
     const dispatcher = serverMusicQueue.connection
       .playStream(ytdl(song.url))
       .on("finish", () => {
+        console.log('in here!')
         serverMusicQueue.songs.shift();
         play(message, serverMusicQueue.songs[0]);
       })
