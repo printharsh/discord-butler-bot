@@ -10,12 +10,12 @@ function play(guild, song, serverMusicQueue) {
     const dispatcher = serverMusicQueue.connection
       .play(ytdl(song.url))
       .on("finish", () => {
-        serverQueue.songs.shift();
-        play(guild, serverQueue.songs[0]);
+        serverMusicQueue.songs.shift();
+        play(guild, serverMusicQueue.songs[0]);
       })
       .on("error", error => console.error(error));
-    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-    serverQueue.textChannel.send(`Currently playing: **${song.title}**`);
+    dispatcher.setVolumeLogarithmic(serverMusicQueue.volume / 5);
+    serverMusicQueue.textChannel.send(`Currently playing: **${song.title}**`);
 }
 
 
@@ -43,7 +43,7 @@ exports.run = async (client, message, args, serverMusicQueue) => {
         url: songInfo.video_url
     };
 
-    if (!serverQueue) {
+    if (!serverMusicQueue) {
         const thisServerQueue = {
           textChannel: message.channel,
           voiceChannel: voiceChannel,
