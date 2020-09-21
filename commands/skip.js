@@ -1,4 +1,4 @@
-exports.run = (client, message, args, serverMusicQueue) => {
+exports.run = (client, message, args) => {
     const serverMusicQueue = message.client.queue.get(message.guild.id)
 
     if (!message.member.voiceChannel){

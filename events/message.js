@@ -13,8 +13,7 @@ module.exports = (client, message) => {
     // If that command doesn't exist, silently exit and do nothing
     if (!cmd) return;
     // Run the command
-    if(command == 'play' || command == 'stop' || command == 'skip'){
-        const serverMusicQueue = client.queue.get(message.guild.id)
+    if(command == 'play'){
         cmd.run(client, message, args, serverMusicQueue)
     }
     else{
