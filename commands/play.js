@@ -35,7 +35,8 @@ exports.run = async (client, message, args, serverMusicQueue) => {
         return message.channel.send("I do not have permission to connect and speak in your voice channel.");
     }
 
-    const songInfo = await ytdl.getInfo(args[1]);
+    let songTitleSearch = message.content.slice(client.settings.cmdPrefix.length).trim().split(/ (.+)/)[1]
+    const songInfo = await ytdl.getInfo(songTitleSearch);
 
     const song = {
         title: songInfo.title,
