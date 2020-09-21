@@ -1,0 +1,78 @@
+const ytdl = require("ytdl-core");
+
+function play(guild, song, serverMusicQueue) {
+    if (!song) {
+      serverMusicQueue.voiceChannel.leave();
+      client.queue.delete(guild.id);
+      return;
+    }
+  
+    const dispatcher = serverMusicQueue.connection
+      .play(ytdl(song.url))
+      .on("finish", () => {
+        serverQueue.songs.shift();
+        play(guild, serverQueue.songs[0]);
+      })
+      .on("error", error => console.error(error));
+    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+    serverQueue.textChannel.send(`Currently playing: **${song.title}**`);
+}
+
+
+exports.run = (client, message, args, serverMusicQueue) => {
+
+    if(args[0] == undefined){
+        message.channel.send("Invalid usage. Proper usage: !play {some song name}")
+        return;
+    }
+    const voiceChannel = message.member.voice.channel;
+    if (!voiceChannel){
+        message.channel.send("You need to be in a voice channel to perform this command.");
+        return;
+    }
+
+    const permissions = voiceChannel.permissionsFor(message.client.user);
+    if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
+      message.channel.send("I do not have permission to connect and speak in your voice channel.");
+      return;
+    }
+
+    const songInfo = await ytdl.getInfo(args[1]);
+
+    const song = {
+        title: songInfo.title,
+        url: songInfo.video_url
+    };
+
+    if (!serverQueue) {
+        const thisServerQueue = {
+          textChannel: message.channel,
+          voiceChannel: voiceChannel,
+          connection: null,
+          songs: [],
+          volume: 5,
+          playing: true
+        };
+        client.queue.set(message.guild.id, thisServerQueue);
+        thisServerQueue.songs.push(song)
+        
+        try {
+            let connection = await voiceChannel.join();
+            thisServerQueue.connection = connection;
+            play(message.guild, thisServerQueue.songs[0], serverMusicQueue)
+        }
+        catch (err) {
+            message.channel.send(`There was an error ${err}. Removing queue.`)
+            client.queue.delete(message.guild.id);
+            return;
+        }
+    }
+    else {
+        // Already a queue so just push it.
+        serverMusicQueue.songs.push(song);
+        message.channel.send(`${song.title} has been added to the queue!`);
+        return;
+    }
+
+
+}

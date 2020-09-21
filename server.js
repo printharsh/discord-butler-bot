@@ -13,6 +13,7 @@ function createClient(){
     client.commands = new Enmap();
     client.events = [];
     client.vars = {}
+    client.queue = new Map();
     client.settings = require('./settings.json')
     return client
 }
