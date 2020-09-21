@@ -1,7 +1,8 @@
 const ytdl = require("ytdl-core");
 const yts = require("yt-search");
 
-function play(guild, song, serverMusicQueue) {
+function play(guild, song) {
+    const serverMusicQueue = client.queue.get(guild.id)
     if (!song) {
       serverMusicQueue.voiceChannel.leave();
       client.queue.delete(guild.id);
@@ -54,33 +55,32 @@ exports.run = async (client, message, args, serverMusicQueue) => {
       };
     }
 
-    if (!serverMusicQueue) {
-        try {
-            var thisServerQueue = {
-                textChannel: message.channel,
-                voiceChannel: voiceChannel,
-                connection: null,
-                songs: [],
-                volume: 5,
-                playing: true
-            };
-            client.queue.set(message.guild.id, thisServerQueue);
-            thisServerQueue.songs.push(song)
-
-            let connection = await voiceChannel.join();
-            console.log(thisServerQueue)
-            thisServerQueue.connection = connection;
-            play(message.guild, thisServerQueue.songs[0], thisServerQueue)
-        }
-        catch (err) {
-            client.queue.delete(message.guild.id);
-            return message.channel.send(`There was an error ${err}. Removing queue.`)
-        }
-    }
-    else {
+    if(serverMusicQueue) {
         // Already a queue so just push it.
         serverMusicQueue.songs.push(song);
         return message.channel.send(`${song.title} has been added to the queue!`);
+    }
+    
+    try {
+        var thisServerQueue = {
+            textChannel: message.channel,
+            voiceChannel: voiceChannel,
+            connection: null,
+            songs: [],
+            volume: 5,
+            playing: true
+        };
+        client.queue.set(message.guild.id, thisServerQueue);
+        thisServerQueue.songs.push(song)
+
+        let connection = await voiceChannel.join();
+        console.log(thisServerQueue)
+        thisServerQueue.connection = connection;
+        play(message.guild, thisServerQueue.songs[0])
+    }
+    catch (err) {
+        client.queue.delete(message.guild.id);
+        return message.channel.send(`There was an error ${err}. Removing queue.`)
     }
 
 
