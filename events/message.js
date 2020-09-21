@@ -14,8 +14,7 @@ module.exports = (client, message) => {
     if (!cmd) return;
     // Run the command
     if(command == 'play'){
-        const serverMusicQueue = client.queue.get(message.guild.id)
-        cmd.run(client, message, args, serverMusicQueue)
+        return await cmd.run(client, message, args, serverMusicQueue);
     }
     else{
         cmd.run(client, message, args);
