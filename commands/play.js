@@ -44,7 +44,7 @@ exports.run = async (client, message, args, serverMusicQueue) => {
     };
 
     if (!serverMusicQueue) {
-        const thisServerQueue = {
+        var thisServerQueue = {
           textChannel: message.channel,
           voiceChannel: voiceChannel,
           connection: null,
@@ -57,6 +57,7 @@ exports.run = async (client, message, args, serverMusicQueue) => {
         
         try {
             let connection = await voiceChannel.join();
+            console.log(thisServerQueue)
             thisServerQueue.connection = connection;
             play(message.guild, thisServerQueue.songs[0], serverMusicQueue)
         }
