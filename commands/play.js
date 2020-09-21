@@ -19,7 +19,7 @@ function play(guild, song, serverMusicQueue) {
 }
 
 
-exports.run = (client, message, args, serverMusicQueue) => {
+exports.run = async (client, message, args, serverMusicQueue) => {
 
     if(args[0] == undefined){
         message.channel.send("Invalid usage. Proper usage: !play {some song name}")
