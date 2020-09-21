@@ -24,11 +24,10 @@ exports.run = async (client, message, args, serverMusicQueue) => {
     if(args[0] == undefined){
         return message.channel.send("Invalid usage. Proper usage: !play {some song name}")
     }
-    console.log(message.member.voiceChannel);
-    console.log(message.member.voiceChannelID);
-    const voiceChannel = message.member.voiceChannel;
+    const { voiceChannel } = message.member.voice;
+
     if (!voiceChannel){
-        return essage.channel.send("You need to be in a voice channel to perform this command.");
+        return message.channel.send("You need to be in a voice channel to perform this command.");
     }
 
     const permissions = voiceChannel.permissionsFor(message.client.user);
