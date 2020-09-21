@@ -3,12 +3,14 @@ const yts = require("yt-search");
 
 function play(message, song) {
     const serverMusicQueue = message.client.queue.get(message.guild.id)
+    console.log(serverMusicQueue)
+    console.log(song)
     if (!song) {
       serverMusicQueue.voiceChannel.leave();
       message.client.queue.delete(message.guild.id);
       return;
     }
-  
+
     const dispatcher = serverMusicQueue.connection
       .playStream(ytdl(song.url))
       .on("finish", () => {
@@ -74,7 +76,6 @@ exports.run = async (client, message, args, serverMusicQueue) => {
         thisServerQueue.songs.push(song)
 
         let connection = await voiceChannel.join();
-        console.log(thisServerQueue)
         thisServerQueue.connection = connection;
         play(message, thisServerQueue.songs[0])
     }
