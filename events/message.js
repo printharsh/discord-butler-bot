@@ -13,11 +13,6 @@ module.exports = (client, message) => {
     // If that command doesn't exist, silently exit and do nothing
     if (!cmd) return;
     // Run the command
-    if(command == 'play'){
-        return cmd.run(client, message, args, serverMusicQueue);
-    }
-    else{
-        cmd.run(client, message, args);
-    }
+    cmd.run(client, message, args);
     return;
 };
