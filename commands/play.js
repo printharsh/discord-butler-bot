@@ -2,10 +2,10 @@ const ytdl = require("ytdl-core");
 const yts = require("yt-search");
 
 function play(guild, song) {
-    const serverMusicQueue = client.queue.get(guild.id)
+    const serverMusicQueue = message.client.queue.get(guild.id)
     if (!song) {
       serverMusicQueue.voiceChannel.leave();
-      client.queue.delete(guild.id);
+      message.client.queue.delete(guild.id);
       return;
     }
   
