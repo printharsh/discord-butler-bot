@@ -1,6 +1,4 @@
 module.exports = (client, message) => {
-    const serverMusicQueue = client.queue.get(message.guild.id)
-
     // Ignore all bots
     if (message.author.bot) return;
     // Ignore messages not starting with the prefix (in config.json)
@@ -16,6 +14,7 @@ module.exports = (client, message) => {
     if (!cmd) return;
     // Run the command
     if(command == 'play' || command == 'stop'){
+        const serverMusicQueue = client.queue.get(message.guild.id)
         cmd.run(client, message, args, serverMusicQueue)
     }
     else{
