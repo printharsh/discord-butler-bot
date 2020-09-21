@@ -1,11 +1,11 @@
 const ytdl = require("ytdl-core");
 const yts = require("yt-search");
 
-function play(guild, song) {
-    const serverMusicQueue = message.client.queue.get(guild.id)
+function play(message, song) {
+    const serverMusicQueue = message.client.queue.get(message.guild.id)
     if (!song) {
       serverMusicQueue.voiceChannel.leave();
-      message.client.queue.delete(guild.id);
+      message.client.queue.delete(message.guild.id);
       return;
     }
   
@@ -13,7 +13,7 @@ function play(guild, song) {
       .playStream(ytdl(song.url))
       .on("finish", () => {
         serverMusicQueue.songs.shift();
-        play(guild, serverMusicQueue.songs[0]);
+        play(message, serverMusicQueue.songs[0]);
       })
       .on("error", error => console.error(error));
     dispatcher.setVolumeLogarithmic(serverMusicQueue.volume / 5);
@@ -76,7 +76,7 @@ exports.run = async (client, message, args, serverMusicQueue) => {
         let connection = await voiceChannel.join();
         console.log(thisServerQueue)
         thisServerQueue.connection = connection;
-        play(message.guild, thisServerQueue.songs[0])
+        play(message, thisServerQueue.songs[0])
     }
     catch (err) {
         client.queue.delete(message.guild.id);
