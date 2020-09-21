@@ -18,5 +18,8 @@ module.exports = (client, message) => {
     if(command == 'play' || command == 'stop'){
         cmd.run(client, message, args, serverMusicQueue)
     }
-    cmd.run(client, message, args);
+    else{
+        cmd.run(client, message, args);
+    }
+
 };
