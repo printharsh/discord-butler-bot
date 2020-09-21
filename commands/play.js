@@ -1,4 +1,5 @@
 const ytdl = require("ytdl-core");
+const yts = require("yt-search");
 
 function play(guild, song, serverMusicQueue) {
     if (!song) {
@@ -36,12 +37,22 @@ exports.run = async (client, message, args, serverMusicQueue) => {
     }
 
     let songTitleSearch = message.content.slice(client.settings.cmdPrefix.length).trim().split(/ (.+)/)[1]
-    const songInfo = await ytdl.getInfo(songTitleSearch);
-
-    const song = {
+    
+    let song;
+    if (ytdl.validateURL(songTitleSearch)) {
+      const songInfo = await ytdl.getInfo(songTitleSearch);
+      song = {
         title: songInfo.title,
         url: songInfo.video_url
-    };
+      };
+    } else {
+      const {videos} = await yts(songTitleSearch);
+      if (!videos.length) return message.channel.send("No songs were found!");
+      song = {
+        title: videos[0].title,
+        url: videos[0].url
+      };
+    }
 
     if (!serverMusicQueue) {
         try {

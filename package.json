@@ -23,6 +23,7 @@
     "ffmpeg": "0.0.4",
     "node-opus": "^0.2.7",
     "winston": "^3.2.1",
+    "yt-search": "^2.3.1",
     "ytdl-core": "^2.1.7"
   },
   "engines": {
