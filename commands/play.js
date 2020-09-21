@@ -24,9 +24,9 @@ exports.run = async (client, message, args, serverMusicQueue) => {
     if(args[0] == undefined){
         return message.channel.send("Invalid usage. Proper usage: !play {some song name}")
     }
-    console.log(message.member.voice);
-    console.log(message.member);
-    const voiceChannel = message.member.voiceChannelID;
+    console.log(message.member.voiceChannel);
+    console.log(message.member.voiceChannelID);
+    const voiceChannel = message.member.voiceChannel;
     if (!voiceChannel){
         return essage.channel.send("You need to be in a voice channel to perform this command.");
     }
