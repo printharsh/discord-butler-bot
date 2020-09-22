@@ -8,7 +8,7 @@ exports.run = (client, message, args) => {
         let fields = [];
         i = 0;
         for(song of serverMusicQueue.songs){
-            fields.append({name: `${i}) ${song.title}`, value: song.url})
+            fields.push({name: `${i}) ${song.title}`, value: song.url})
         }
 
         console.log(fields);
