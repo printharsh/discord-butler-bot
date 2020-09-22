@@ -5,8 +5,6 @@ exports.run = (client, message, args) => {
     try{
         const serverMusicQueue = message.client.queue.get(message.guild.id);
 
-        console.log(serverMusicQueue.songs);
-
         let fields = [];
         i = 0;
         for(song of serverMusicQueue.songs){
@@ -22,13 +20,13 @@ exports.run = (client, message, args) => {
         .setColor(0xff0000)
         // Set the main content of the embed
         .setDescription('Hello sir, this is the current music queue you requested.')
-        .addFields(fields
-        )
         .setTimestamp();
+        console.log('past that.');
 
         message.channel.send(embed);
     }
     catch(err){
+        console.log(err)
         message.channel.send('Sir, you are tripping there is nothing in queue.')
     }
 }
