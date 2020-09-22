@@ -5,11 +5,11 @@ exports.run = (client, message, args) => {
     try{
         const serverMusicQueue = message.client.queue.get(message.guild.id);
 
-        console.log(serverMusicQueue);
+        console.log(serverMusicQueue.songs);
 
         let fields = [];
         i = 0;
-        for(song of serverMusicQueue){
+        for(song of serverMusicQueue.songs){
             fields.append({name: `${i}) ${song.title}`, value: song.url})
         }
 
