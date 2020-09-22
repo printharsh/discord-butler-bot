@@ -20,5 +20,5 @@ exports.run = (client, message, args) => {
     )
     .setTimestamp();
 
-    message.channel.send("pong!").catch(console.error);
+    message.channel.send(embed);
 }
