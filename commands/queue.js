@@ -6,14 +6,13 @@ exports.run = (client, message, args) => {
         const serverMusicQueue = client.queue.get(message.guild.id);
 
         let fields = [];
-        i = 0;
+        i = 1;
         const embed = new RichEmbed()
         for(const song of serverMusicQueue.songs){
-            embed.addField(`${i}) ${song.title}`, song.url, true)
+            embed.addField(`${i}) ${song.title}`, song.url, false)
+            i += 1;
         }
         embed.setTitle('Current Music Queue').setColor(0xff0000).setDescription('Hello sir, this is the current music queue you requested.').setTimestamp();
-        console.log('past that.');
-
         message.channel.send(embed);
     }
     catch(err){
