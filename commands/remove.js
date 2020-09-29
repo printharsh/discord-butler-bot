@@ -1,7 +1,7 @@
 exports.run = (client, message, args) => {
     const serverMusicQueue = message.client.queue.get(message.guild.id)
     let numberToRemove = args[0] - 1
-    if(numberToRemove < 0 || numberToRemove > len(serverMusicQueue.songs)){
+    if(numberToRemove < 0 || numberToRemove > serverMusicQueue.songs.length){
       return message.channel.send(
             "Sir, I humbly request you to stop with these absurd requests. It's !remove {index of song to remove}."
           );
