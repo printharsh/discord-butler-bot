@@ -12,6 +12,11 @@ exports.run = (client, message, args) => {
     else{
         try{
             let deletedSong = serverMusicQueue.songs.splice(numberToRemove, 1)
+            if(numberToRemove == 0){
+                // Stop playing because we are removing 1st song in queue.
+                serverMusicQueue.playing = true
+                serverMusicQueue.connection.dispatcher.end();
+            }
             return message.channel.send(`As per your request, I have removed ${deletedSong[0].song.title}`);
         }
         catch(err){
