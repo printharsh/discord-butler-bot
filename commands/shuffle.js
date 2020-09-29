@@ -7,7 +7,7 @@ exports.run = (client, message, args) => {
           serverMusicQueue.shuffle = false;
         }
         else{
-          message.channel.send('Seems like you're feeling frisky today sir, time to SHUFFLE.');
+          message.channel.send('Seems like you\'re feeling frisky today sir, time to SHUFFLE.');
           serverMusicQueue.shuffle = true;
         }
     }
