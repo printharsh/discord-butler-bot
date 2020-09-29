@@ -6,7 +6,7 @@ exports.run = (client, message, args) => {
     try{
         const serverMusicQueue = client.queue.get(message.guild.id);
         serverMusicQueue.volume = volume_to_set;
-        serverMusicQueue.connection.setVolumeLogarithmic(serverMusicQueue.volume / 100);
+        serverMusicQueue.connection.dispatcher.setVolumeLogarithmic(serverMusicQueue.volume / 100);
     }
     catch(err){
         console.log(err)
