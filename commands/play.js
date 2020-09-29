@@ -15,12 +15,21 @@ function play(message, song) {
       .playStream(ytdl(song.url))
       .on("end", () => {
         console.log('in here!')
-        serverMusicQueue.songs.shift();
+        
+        let justPlayedSong = serverMusicQueue.songs.shift();
+        if(serverMusicQueue.loop){
+            // Add to end.
+            serverMusicQueue.songs.push(justPlayedSong);
+        }
         play(message, serverMusicQueue.songs[0]);
       })
       .on("error", error => {
         console.error(error)
-        serverMusicQueue.songs.shift();
+        let justPlayedSong = serverMusicQueue.songs.shift();
+        if(serverMusicQueue.loop){
+            // Add to end.
+            serverMusicQueue.songs.push(justPlayedSong);
+        }
         play(message, serverMusicQueue.songs[0]);
       });
     dispatcher.setVolumeLogarithmic(serverMusicQueue.volume / 5);
@@ -74,6 +83,7 @@ exports.run = async (client, message, args) => {
             voiceChannel: voiceChannel,
             connection: null,
             songs: [],
+            loop: false,
             volume: 5,
             playing: true
         };
