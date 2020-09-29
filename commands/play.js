@@ -6,6 +6,7 @@ function play(message, song) {
     console.log(serverMusicQueue)
     console.log(song)
     if (!song) {
+      console.log('no song');
       serverMusicQueue.voiceChannel.leave();
       message.client.queue.delete(message.guild.id);
       return;
@@ -32,7 +33,7 @@ function play(message, song) {
         }
         play(message, serverMusicQueue.songs[0]);
       });
-    dispatcher.setVolumeLogarithmic(serverMusicQueue.volume / 100);
+    dispatcher.setVolumeLogarithmic(serverMusicQueue.volume / 5);
     serverMusicQueue.textChannel.send(`Currently playing: **${song.title}**`);
 }
 
@@ -84,7 +85,7 @@ exports.run = async (client, message, args) => {
             connection: null,
             songs: [],
             loop: false,
-            volume: 50,
+            volume: 5,
             playing: true
         };
         client.queue.set(message.guild.id, thisServerQueue);
