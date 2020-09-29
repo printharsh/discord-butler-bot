@@ -1,4 +1,4 @@
-const {MessageEmbed} = require('discord.js');
+const {RichEmbed} = require('discord.js');
 
 exports.run = (client, message, args) => {
 
@@ -7,20 +7,11 @@ exports.run = (client, message, args) => {
 
         let fields = [];
         i = 0;
+        const embed = new RichEmbed()
         for(const song of serverMusicQueue.songs){
-            fields.push({name: `${i}) ${song.title}`, value: song.url})
+            embed.addField(`${i}) ${song.title}`, song.url, true)
         }
-
-        console.log(fields);
-
-        const embed = new MessageEmbed()
-        // Set the title of the field
-        .setTitle('Current Music Queue')
-        // Set the color of the embed
-        .setColor(0xff0000)
-        // Set the main content of the embed
-        .setDescription('Hello sir, this is the current music queue you requested.')
-        .setTimestamp();
+        embed.setTitle('Current Music Queue').setColor(0xff0000).setDescription('Hello sir, this is the current music queue you requested.').setTimestamp();
         console.log('past that.');
 
         message.channel.send(embed);
