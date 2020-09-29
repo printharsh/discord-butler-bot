@@ -32,7 +32,7 @@ function play(message, song) {
         }
         play(message, serverMusicQueue.songs[0]);
       });
-    dispatcher.setVolumeLogarithmic(serverMusicQueue.volume / 5);
+    dispatcher.setVolumeLogarithmic(serverMusicQueue.volume / 100);
     serverMusicQueue.textChannel.send(`Currently playing: **${song.title}**`);
 }
 
@@ -84,7 +84,7 @@ exports.run = async (client, message, args) => {
             connection: null,
             songs: [],
             loop: false,
-            volume: 5,
+            volume: 50,
             playing: true
         };
         client.queue.set(message.guild.id, thisServerQueue);
