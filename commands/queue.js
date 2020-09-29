@@ -8,6 +8,7 @@ exports.run = (client, message, args) => {
         let fields = [];
         i = 1;
         const embed = new RichEmbed()
+        embed.addField(`Loop: `, `${serverMusicQueue.loop}`, false)
         for(const song of serverMusicQueue.songs){
             embed.addField(`${i}) ${song.title}`, song.url, false)
             i += 1;
