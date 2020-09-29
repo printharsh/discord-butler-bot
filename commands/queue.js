@@ -3,7 +3,7 @@ const {MessageEmbed} = require('discord.js');
 exports.run = (client, message, args) => {
 
     try{
-        const serverMusicQueue = message.client.queue.get(message.guild.id);
+        const serverMusicQueue = client.queue.get(message.guild.id);
 
         let fields = [];
         i = 0;
