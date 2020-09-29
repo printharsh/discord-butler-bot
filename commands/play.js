@@ -22,6 +22,9 @@ function play(message, song) {
             // Add to end.
             serverMusicQueue.songs.push(justPlayedSong);
         }
+        if(serverMusicQueue.shuffle){
+            shuffle(serverMusicQueue.songs)
+        }
         play(message, serverMusicQueue.songs[0]);
       })
       .on("error", error => {
@@ -30,6 +33,9 @@ function play(message, song) {
         if(serverMusicQueue.loop){
             // Add to end.
             serverMusicQueue.songs.push(justPlayedSong);
+        }
+        if(serverMusicQueue.shuffle){
+            shuffle(serverMusicQueue.songs)
         }
         play(message, serverMusicQueue.songs[0]);
       });
@@ -85,6 +91,7 @@ exports.run = async (client, message, args) => {
             connection: null,
             songs: [],
             loop: false,
+            shuffle: false,
             volume: 50,
             playing: true
         };
