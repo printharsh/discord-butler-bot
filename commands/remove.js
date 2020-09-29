@@ -17,7 +17,7 @@ exports.run = (client, message, args) => {
                 serverMusicQueue.playing = true
                 serverMusicQueue.connection.dispatcher.end();
             }
-            return message.channel.send(`As per your request, I have removed ${deletedSong[0].song.title}`);
+            return message.channel.send(`As per your request, I have removed ${deletedSong[0].title}`);
         }
         catch(err){
             console.log(err);
