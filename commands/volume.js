@@ -2,6 +2,7 @@ exports.run = (client, message, args) => {
     volume_to_set = args[0]
     if(args[0] === undefined || args[0] < 0 || args[0] > 100 ){
         message.channel.send('Sir, the proper usage is !volume {0-100}');
+        return;
     }
     try{
         const serverMusicQueue = client.queue.get(message.guild.id);
