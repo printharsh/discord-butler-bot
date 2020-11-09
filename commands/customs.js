@@ -35,8 +35,8 @@ exports.run = (client, message, args) => {
         }
         
         const startReactionFilter = (reaction, user) => {
-            // Can only be started by person who did !customs command.
-            return reaction.emoji.name === '⭐' && user.id === message.author.id;
+            // Can be started by ANY person who did !customs command.
+            return reaction.emoji.name === '⭐';
         }
 
         let joinReactionCollector = gameMessage.createReactionCollector(joinReactionFilter, {time: 1800000, max: maxPlayers});
